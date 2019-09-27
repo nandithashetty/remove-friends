@@ -1,0 +1,206 @@
+6. Remove Friends
+
+After getting her PhD, Christie has become a celebrity at her university, and her
+Facebook profile is full of friend requests. Being the nice girl, she is, Christie has
+accepted all the requests.
+Now Kuldeep is jealous of all the attention she is getting from other guys, so he asks
+her to delete some of the guys from her friend list.
+To avoid a 'scene', Christie decides to remove some friends from her friend list, since
+she knows the popularity of each of the friend she has, she uses the following
+algorithm to delete a friend.
+
+
+#include<stdio.h>
+#include<stdlib.h>
+
+ 
+struct node
+{
+   
+ struct node *prev;
+  
+  int data;
+    
+struct node *next;
+}*first=NULL;
+ 
+
+
+void create(int a[],int x)
+
+{
+    
+struct node *t,*last=NULL;
+   
+ first=(struct node *)malloc(sizeof(struct node));
+   
+ first->data=a[0];
+  
+  first->prev=NULL;
+  
+  first->next=NULL;
+   
+ last=first;
+ 
+    
+for(int i=1;i<x;i++)
+   
+ {
+        
+t=(struct node*)malloc(sizeof(struct node));
+   
+     t->data=a[i];
+       
+ t->next=NULL;
+        
+last->next=t;
+      
+  t->prev=last;
+    
+    last=t;
+    
+}
+
+
+}
+ 
+
+
+void deletefriend(struct node *p,int k)
+
+{
+    
+struct node *q=NULL;
+    
+int i=0;
+   
+ q=p->next;
+   
+ while(p&&i<k)
+  
+  {
+        
+if(p&&p->data<q->data)
+      
+  {
+ 
+           
+ if(p!=first)
+              
+  {
+              
+  p->prev->next=p->next;
+            
+    p->next->prev=p->prev;
+               
+ p=p->prev;
+               
+ i++;
+               
+ }
+           
+ else
+           
+ {
+               
+ first=first->next;
+              
+  q=q->next;
+               
+ p=p->next;
+                
+i++;
+           
+}
+ 
+       
+ }
+       
+ else
+{
+   
+ p=p->next;
+      
+      q=q->next;
+   
+     
+}
+    
+}
+
+}
+
+
+ 
+void display(struct node *p)
+
+{
+   
+ while(p)
+    
+{
+        
+printf("%d ",p->data);
+  
+      p=p->next;
+   
+ }
+
+}
+ 
+ 
+
+
+void main()
+
+{
+   
+ int t;
+    
+scanf("%d",&t);
+  
+  while(t)
+   
+ {
+        
+int n,k;
+     
+   scanf("%d%d",&n,&k);
+      
+  int a[n];
+     
+   for(int i=0;i<n;i++)
+     
+       scanf("%d",&a[i]);
+       
+ create(a,n);
+    
+    deletefriend(first,k);
+    
+    display(first);
+     
+   printf("\n");
+     
+   t--;
+    
+}
+
+ 
+}
+
+
+Input:
+
+3
+3 1
+3 100 1 
+5 2 
+19 12 3 4 17 
+5 3 
+23 45 11 77 18
+
+
+Output:
+100 1
+19 12 17 
+77 18
